@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Responsive Sign Up Page</title>
+    <style>
+        body {
+            font-family: montserrat, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('img/background.jpeg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            align-items: center;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sideimg img {
+            height: 450px;
+            width: 345px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .form-container {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .form-container h2 {
+            color: #F26522;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .signup-form input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            color: grey;
+            border-radius: 2px;
+            border-bottom: 1px solid gray ;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            outline: none;
+            transition: border-bottom-color 0.3s ease;
+        }
+        .signup-form input:focus {
+            border-bottom: 2px solid #F26522;
+        }
+        .signup-form input::placeholder {
+            color: #F26522;
+            font-family: montserrat;
+            font-weight: 450;
+        }
+
+
+        .signup-form input[type="submit"] {
+            background-color: #F26522;
+            color: white;
+            cursor: pointer;
+            font-size: large;
+            font-weight: 500;
+            font-family: montserrat, sans-serif;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            /* box-shadow: 0 4px 6px rgba(242, 101, 34, 0.3); */
+            
+        }
+
+        .signup-form input[type="submit"]:hover {
+            background-color: #dc642d;
+            transition: background-color 0.3s ease, box-shadow 0.2s ease;
+            box-shadow: 10px 10px 54px rgba(79, 79, 82, 0.2);
+        }
+
+        .signup-link a {
+            color: #F26522;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            color: #dc642d;
+        }
+
+        .signup-link p {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                max-width: 100%;
+                padding: 10px;
+            }
+
+            .sideimg img {
+                height: 250px;
+                width: 100%;
+                border-radius: 8px;
+            }
+
+            .form-container {
+                padding: 15px;
+            }
+
+            .form-container h2 {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+
+            .form-container {
+                padding: 10px;
+            }
+
+            .form-container h2 {
+                font-size: 18px;
+            }
+
+            .signup-form input {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .signup-link p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sideimg">
+            <img src="img/formAttachment.jpg" alt="Sign Up Illustration">
+        </div>
+        
+        <div class="form-container">
+            <h2>SIGN UP</h2>
+            <form class="signup-form" onsubmit="event.preventDefault(); register();">
+                <input id="username" type="text" placeholder="Full Name" required>
+                <input id="email" type="text" placeholder="Email" required>
+                <input id="password" type="password" placeholder="Password" required>
+                <input id="confirm-password" type="password" placeholder="Confirm Password" required>
+                <input type="submit" value="Create An Account" style="border-radius: 4px;">
+            </form>
+            <div class="signup-link">
+                <p>Already have an account? <a href="login.html">Log In</a></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        let username = localStorage.getItem('uname');
+        let confirmpass = localStorage.getItem('upass');
+        username = username ? username.split(",") : [];
+        confirmpass = confirmpass ? confirmpass.split(",") : [];
+
+        function register() {
+            let uname = document.querySelector('#username').value;
+            let pass = document.querySelector('#password').value;
+            let cpass = document.querySelector('#confirm-password').value;
+
+            if (!uname || !pass || !cpass) {
+                alert("Fields cannot be empty!");
+                return;
+            }
+
+            if (cpass === pass) {
+                username.push(uname);
+                confirmpass.push(pass);
+                localStorage.setItem('uname', username);
+                localStorage.setItem('upass', confirmpass);
+                alert("User registered successfully!");
+                window.location.href="login.html";
+            } else {
+                alert("Passwords do not match!");
+            }
+        }
+    </script>
+</body>
+</html>
